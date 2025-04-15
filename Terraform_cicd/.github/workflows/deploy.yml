@@ -1,0 +1,61 @@
+name: First project github actions with terraform
+on:
+  push:
+    branches: [master]
+
+  pull_request:
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+  pull-requests: write
+
+jobs:
+  deploy:
+    name: Buill aws EC2 with terraform
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: checkout
+          uses: actions/checkout@v4
+
+        - name: Configure AWS Credentials for China region audience
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            audience: sts.amazonaws.com.cn
+            aws-region: us-west-1
+            role-to-assume: arn:aws:iam::640109666574:role/github-oidc-terraform-aws-tfstates-role
+
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v3
+          #with:
+            #terraform_version: "1.7.4"
+
+        - name: Terraform fmt
+          id: fmt
+          run: terraform fmt -check
+          continue-on-error: true
+
+        - name: Terraform Init
+          id: init
+          run: terraform init 
+          #working-directory: ./Terraform_codes
+
+        - name: Terraform Validate
+          id: validate
+          run: terraform validate 
+          #working-directory: ./Terraform_codes
+
+        - name: Terraform Plan
+          id: plan
+          run: terraform plan 
+          if: github.event_name == 'pull_request'
+          #continue-on-error: true
+          #working-directory: ./Terraform_codes
+
+        - name: Terraform Apply
+          if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+          run: terraform apply -auto-approve 
+
+        
+
