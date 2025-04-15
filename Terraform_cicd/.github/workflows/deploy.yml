@@ -23,7 +23,7 @@ jobs:
           uses: aws-actions/configure-aws-credentials@v4
           with:
             audience: sts.amazonaws.com.cn
-            aws-region: us-west-1
+            aws-region: us-west-2
             role-to-assume: arn:aws:iam::640109666574:role/github-oidc-terraform-aws-tfstates-role
 
         - name: Setup Terraform
