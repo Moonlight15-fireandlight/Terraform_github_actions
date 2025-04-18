@@ -54,7 +54,7 @@ jobs:
           working-directory: ./Terraform_cicd
 
         - name: Terraform Apply
-          if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-          run: terraform apply -auto-approve 
+          run: terraform apply -auto-approve
+          working-directory: ./Terraform_cicd
 
         
