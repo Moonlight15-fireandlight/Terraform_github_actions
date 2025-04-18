@@ -1,14 +1,18 @@
 name: First project github actions with terraform
 on:
   push:
-    branches: [master]
-
+    branches:
+      - master
   pull_request:
 
-permissions:
-  id-token: write # This is required for requesting the JWT
-  contents: read  # This is required for actions/checkout
-  pull-requests: write
+#env:
+#  AWS_ACCESS_KEY: 
+#  AWS_ACCESS_SECRET_KEY: 
+
+#permissions:
+#  id-token: write # This is required for requesting the JWT
+#  contents: read  # This is required for actions/checkout
+#  pull-requests: write
 
 jobs:
   deploy:
@@ -19,12 +23,19 @@ jobs:
         - name: checkout
           uses: actions/checkout@v4
 
-        - name: Configure AWS Credentials for China region audience
+        #- name: Configure AWS Credentials for China region audience
+        #  uses: aws-actions/configure-aws-credentials@v4
+        #  with:
+        #    audience: sts.amazonaws.com.cn
+        #    aws-region: us-west-1
+        #    role-to-assume: arn:aws:iam::640109666574:role/github-oidc-terraform-aws-tfstates-role
+
+        - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@v4
           with:
-            audience: sts.amazonaws.com.cn
-            aws-region: us-west-1
-            role-to-assume: arn:aws:iam::640109666574:role/github-oidc-terraform-aws-tfstates-role
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: us-west-2
 
         - name: Setup Terraform
           uses: hashicorp/setup-terraform@v3
