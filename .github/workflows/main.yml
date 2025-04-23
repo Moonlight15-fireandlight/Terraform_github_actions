@@ -5,9 +5,15 @@ on:
       - master
   pull_request:
 
+  workflow_dispatch:
+
 #env:
 #  AWS_ACCESS_KEY: 
 #  AWS_ACCESS_SECRET_KEY: 
+
+defaults:
+  run:
+    working-directory: ./Terraform_cicd
 
 #permissions:
 #  id-token: write # This is required for requesting the JWT
@@ -15,7 +21,7 @@ on:
 #  pull-requests: write
 
 jobs:
-  deploy:
+  build:
     name: Buill aws EC2 with terraform
     runs-on: ubuntu-latest
 
@@ -45,16 +51,19 @@ jobs:
         - name: Terraform Init
           id: init
           run: terraform init 
-          working-directory: ./Terraform_cicd
+          #working-directory: ./Terraform_cicd
 
         - name: Terraform Plan
           id: plan
           run: terraform plan 
           #continue-on-error: true
-          working-directory: ./Terraform_cicd
+          #working-directory: ./Terraform_cicd
 
         - name: Terraform Apply
           run: terraform apply -auto-approve
-          working-directory: ./Terraform_cicd
+          #working-directory: ./Terraform_cicd
+
+
+
 
         
