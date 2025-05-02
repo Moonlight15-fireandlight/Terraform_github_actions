@@ -58,9 +58,8 @@ jobs:
             #terraform_version: "1.7.4"
 
         - name: Setup variables imput
-          run: export TF_VAR_instance_type="${{ github.event.inputs.instance_type }}"
-          
-
+          run: export TF_VAR_instancetype="${{ github.event.inputs.instance_type }}"
+        
         - name: Terraform Init
           id: init
           run: terraform init 
