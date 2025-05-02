@@ -64,12 +64,12 @@ jobs:
 
         - name: Terraform Plan
           id: plan
-          run: terraform plan -var "instance_type = ${{ github.event.inputs.instance_type }}"
+          run: terraform plan -var "instance_type=${{ github.event.inputs.instance_type }}"
           #continue-on-error: true
           #working-directory: ./Terraform_cicd
 
         - name: Terraform Apply
-          run: terraform apply -var "instance_type = ${{ github.event.inputs.instance_type }}" -auto-approve
+          run: terraform apply -var "instance_type=${{ github.event.inputs.instance_type }}" -auto-approve
           #working-directory: ./Terraform_cicd
 
 
