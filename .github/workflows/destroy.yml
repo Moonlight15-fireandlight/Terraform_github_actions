@@ -36,6 +36,9 @@ jobs:
               id: destroy
               run: terraform destroy -auto-approve
 
+# El error de los variables es posible que se solucione juntando un archivo de variables donde se declar el valor
+
+
 
 
 

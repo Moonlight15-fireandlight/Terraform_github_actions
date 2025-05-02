@@ -57,6 +57,10 @@ jobs:
           #with:
             #terraform_version: "1.7.4"
 
+        - name: Setup variables imput
+          run: export TF_VAR_instance_type="${{ github.event.inputs.instance_type }}"
+          
+
         - name: Terraform Init
           id: init
           run: terraform init 
@@ -64,12 +68,12 @@ jobs:
 
         - name: Terraform Plan
           id: plan
-          run: terraform plan -var "instance_type=${{ github.event.inputs.instance_type }}"
+          run: terraform plan 
           #continue-on-error: true
           #working-directory: ./Terraform_cicd
 
         - name: Terraform Apply
-          run: terraform apply -var "instance_type=${{ github.event.inputs.instance_type }}" -auto-approve
+          run: terraform apply -auto-approve
           #working-directory: ./Terraform_cicd
 
 
