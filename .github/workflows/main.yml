@@ -1,5 +1,14 @@
 name: Deploy AWS EC2 by Terraform
-on: [pull_request, workflow_dispatch]
+on: # [pull_request, workflow_dispatch] # el primero que se relice activara sera el trigger
+  pull_request:
+
+  workflow_dispatch:
+    inputs:
+
+      instance_type:
+        description: 'Colocar el tipo de instancia donde se desplegara el cluster de minikube' #Se puede poner condiciones ejemplo: diferente a t2.micro
+        required: true
+
   #push:
   #  branches:
   #    - master
@@ -55,12 +64,12 @@ jobs:
 
         - name: Terraform Plan
           id: plan
-          run: terraform plan 
+          run: terraform plan -var "instance_type = ${{ github.event.inputs.instance_type }}"
           #continue-on-error: true
           #working-directory: ./Terraform_cicd
 
         - name: Terraform Apply
-          run: terraform apply -auto-approve
+          run: terraform apply -var "instance_type = ${{ github.event.inputs.instance_type }}" -auto-approve
           #working-directory: ./Terraform_cicd
 
 
