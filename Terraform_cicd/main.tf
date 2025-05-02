@@ -1,200 +1,49 @@
-data "aws_availability_zones" "available" {
 
-  state = "available"
+#infraestructura para 1 master node y n worker nodesy
 
-  filter {
-    name   = "zone-type"
-    values = ["availability-zone"]
-  }
+#module "deploy_kubernetes_infraestructure" {
 
-}
+#  source              = "./modules/vpcaws"
+#  vpc_cidr            = "172.16.0.0/16"
+#  cidr_pub_subnets    = "172.16.0.0/20" 
+#  cird_priv_subnets   = [ "172.16.16.0/20" ]
+#  region              = "us-west-2"
+#  nodes_instance_type = "t2.medium"
+#  vpc_dns             = "true"
+#  number_master_nodes = 1
+#  number_worker_nodes = 1
+#  #vpc_dns = false # argumento opcional
+#}
 
-data "aws_ami" "ubuntu" {
+#APUNTAR EL DOMINIO AL HOST (SERVIDOR )
 
-  most_recent = true             #la version mas reciente
-  owners      = ["099720109477"] #owner of the ami
+module "minikube" {
 
-}
-
-resource "aws_vpc" "main_vpc" {
-
-  cidr_block = var.vpc_cidr
-  
-  enable_dns_hostnames = var.vpc_dns
-
-  tags = {
-    Name = "vpc_terraform"
-  }
-
-}
-
-resource "aws_internet_gateway" "igw" {
-
-  vpc_id = aws_vpc.main_vpc.id #ya incluye el attachment al VPC
-
-  tags = {
-    Name = "igw_terraform"
-  }
-}
-
-resource "aws_subnet" "publicsunet" {
-
-  vpc_id            = aws_vpc.main_vpc.id
-
-  #count             = length(var.cidr_pub_subnets)
-
-  cidr_block        = var.cidr_pub_subnets
-
-  availability_zone = data.aws_availability_zones.available.names[0]
-
-  tags = {
-
-               Name = "pubsunet_terraform"
-  
-  }
-}
-
-resource "aws_route_table" "public" {
-
-  vpc_id = aws_vpc.main_vpc.id
-
-  route {
-
-    cidr_block = "0.0.0.0/0"
-
-    gateway_id = aws_internet_gateway.igw.id
-
-  }
-
-  tags = {
-    Name = "routetable_public_terraform"
-  }
-
-  depends_on = [ aws_subnet.publicsunet ]
+  source            = "./modules/minikube"
+  vpc_cidr          = "172.16.0.0/16"
+  vpc_dns           = "true"
+  cidr_pub_subnets  = "172.16.0.0/20"
+  mypublicip        = "179.6.168.10/32"
+  instance_type     = "t2.medium"
 
 }
 
-resource "aws_route_table_association" "topublic" {
-  
-  subnet_id      = aws_subnet.publicsunet.id 
-  route_table_id = aws_route_table.public.id
+#module "upload_images_s3" {
 
-}
+  #source = "./modules/storage_s3"
 
-resource "aws_instance" "ubuntu_server" {
+#}
 
-  ami           = var.ami
-  instance_type = var.instance_type
-  key_name      = "DockerOregon"
-  #user_data     = data.template_file.init.rendered
-  #user_data     = file("./docker.sh") # instalar docker
+# tiene que ser opcional nat gateway
 
-  tags = {
-    Name = "Ubuntu_server"
-  }
+#minikube start --driver=docker --nodes 2 -p multinode-demo --kubernetes-version v1.32.0
 
-  vpc_security_group_ids = [ aws_security_group.server_security_group.id ]
-  subnet_id              = aws_subnet.publicsunet.id # solo habra 1 bastion para los master y wokrer nodes
-  #subnet_id = module.vpc[each.key].public_subnets[*] #para lograr que una instancia este en su respectivo subred 
-  
+# module "server_ubuntu" {
 
-  associate_public_ip_address = true
+#  source            = "./modules/ec2instance"
+#  vpc_cidr          = "172.16.0.0/16"
+#  vpc_dns           = "true"
+#  cidr_pub_subnets  = "172.16.0.0/20"
+#  instance_type     = "t2.medium" #deberia ser micro
 
-
-  #depends_on = [ aws_internet_gateway.igw ] #Como exportar esto
-
-}
-
-resource "aws_security_group" "server_security_group" {
-
-  name = "minikube_security_group"
-
-  description = "Grupo de seguridad establecido para el servidor minikube"
-
-  #for_each = var.project
-
-  vpc_id = aws_vpc.main_vpc.id
-  
-}
-
-resource "aws_security_group_rule" "connect_to_ssh" {
-
-  type              = "ingress"
-  
-  from_port         = 22
-  
-  to_port           = 22
-  
-  protocol          = "tcp"
-  
-  #cidr_blocks       = [ var.mypublicip ]
-
-  cidr_blocks       = [ "0.0.0.0/0" ]
-  
-  security_group_id = aws_security_group.server_security_group.id
-
-  description       = "ssh to minikube"
-  
-}
-
-resource "aws_security_group_rule" "ingress_http" {
-
-  type              = "ingress"
-  
-  from_port         = 80
-  
-  to_port           = 80
-  
-  protocol          = "tcp"
-  
-  cidr_blocks       = [ "0.0.0.0/0" ]
-  
-  security_group_id = aws_security_group.server_security_group.id
-
-  description       = "http to minikube"
-  
-}
-
-resource "aws_security_group_rule" "ingress_https" {
-
-  type              = "ingress"
-  
-  from_port         = 443
-  
-  to_port           = 443
-  
-  protocol          = "tcp"
-  
-  cidr_blocks       = [ "0.0.0.0/0" ]
-  
-  security_group_id = aws_security_group.server_security_group.id
-
-  description       = "https to minikube"
-  
-}
-
-
-resource "aws_security_group_rule" "egress_rule" {
-
-    type        = "egress"
-
-    from_port   = 0
-
-    to_port     = 0
-
-    protocol = "-1"
-
-    cidr_blocks = ["0.0.0.0/0"]
-
-    security_group_id = aws_security_group.server_security_group.id
-  
-    description = "minikube egress rules"
-
-}
-
-
-output "server_public_ip" {
-
-  value = aws_instance.ubuntu_server.public_ip
-  
-}
+#}
