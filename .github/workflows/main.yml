@@ -1,4 +1,4 @@
-name: Deploy AWS EC2 by Terraform
+name: Deploy Minikube Cluster AWS
 on: # [pull_request, workflow_dispatch] # el primero que se relice activara sera el trigger
   pull_request:
 

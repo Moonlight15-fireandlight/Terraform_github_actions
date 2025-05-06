@@ -2,10 +2,18 @@ name: Destroy infraestructure Terraform AWS
 
 on:
     workflow_dispatch:
+      inputs:
+
+        instance_type:
+          description: "Colocar el type de instancia a destruir"
+          required: false
 
 defaults:
   run:
     working-directory: ./Terraform_cicd
+
+env:
+  TF_VAR_instance_type: "${{ github.event.inputs.instance_type }}"
 
 jobs:
     destroy:
