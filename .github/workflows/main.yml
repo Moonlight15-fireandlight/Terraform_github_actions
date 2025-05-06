@@ -62,6 +62,8 @@ jobs:
         - name: Terraform Init
           id: init
           run: terraform init 
+          env: 
+            TF_VAR_instancetype: "${{ github.event.inputs.instance_type }}"
           #working-directory: ./Terraform_cicd
 
         - name: Terraform Plan
