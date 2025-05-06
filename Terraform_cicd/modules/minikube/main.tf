@@ -102,7 +102,7 @@ data "template_file" "init" {
 resource "aws_instance" "minikube_server" {
 
   ami           = var.ami
-  instance_type  = var.instancetype
+  instance_type  = var.instance_type
   key_name      = "DockerOregon"
   user_data     = data.template_file.init.rendered
   #user_data     = templatefile("./minikube.sh", {kubectl_version=var.kubectl_version,kubernetes_version=var.kubernetes_version})

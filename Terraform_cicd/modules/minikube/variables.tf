@@ -32,7 +32,7 @@ variable "ami" {
 
 }
 
-variable "instancetype" {
+variable "instance_type" {
 
     type = string
 

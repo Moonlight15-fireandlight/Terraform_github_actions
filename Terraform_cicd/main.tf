@@ -24,7 +24,7 @@ module "minikube" {
   vpc_dns           = "true"
   cidr_pub_subnets  = "172.16.0.0/20"
   mypublicip        = "179.6.168.10/32"
-  instancetype      = var.instancetype
+  instance_type      = var.instance_type
 
 }
 
