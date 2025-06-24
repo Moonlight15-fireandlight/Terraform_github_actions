@@ -25,7 +25,7 @@ jobs:
               uses: actions/checkout@v4
     
             - name: load & test action
-              uses: Terraform_cicd/.github/actions/node-ci
+              uses: ./Terraform_cicd/.github/actions/node-ci
 
             - name: Terraform Destroy
               id: destroy
