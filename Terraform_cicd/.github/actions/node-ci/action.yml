@@ -13,8 +13,10 @@ runs:
             
   - name: Setup Terraform
     uses: hashicorp/setup-terraform@v3
+    shell: bash
 
   - name: Terraform init
     id: init
     run: terraform init
+    shell: bash
 
