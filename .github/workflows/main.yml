@@ -46,24 +46,8 @@ jobs:
         #    aws-region: us-west-1
         #    role-to-assume: arn:aws:iam::640109666574:role/github-oidc-terraform-aws-tfstates-role
 
-        - name: Configure AWS Credentials
-          uses: aws-actions/configure-aws-credentials@v4
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: us-west-2
-
-        - name: Setup Terraform
-          uses: hashicorp/setup-terraform@v3
-          #with:
-            #terraform_version: "1.7.4"
-        
-        - name: Terraform Init
-          id: init
-          run: terraform init 
-          #env: 
-           # TF_VAR_instancetype:
-          #working-directory: ./Terraform_cicd
+        - name: load & test action
+          uses: ./Terraform_cicd/.github/actions/node-ci/action.yml
 
         - name: Terraform Plan
           id: plan

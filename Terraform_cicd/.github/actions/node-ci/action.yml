@@ -1,0 +1,20 @@
+name: Mi primer composite action
+description: Mi primer composite action
+
+runs:
+  using: "composite"
+  steps:
+  - name: Configure AWS Credentials
+    uses: aws-actions/configure-aws-credentials@v4
+    with:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-region: us-west-2
+            
+  - name: Setup Terraform
+    uses: hashicorp/setup-terraform@v3
+
+  - name: Terraform init
+    id: init
+    run: terraform init
+
