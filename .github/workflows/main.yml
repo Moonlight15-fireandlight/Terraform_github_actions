@@ -47,7 +47,7 @@ jobs:
         #    role-to-assume: arn:aws:iam::640109666574:role/github-oidc-terraform-aws-tfstates-role
 
         - name: load & test action
-          uses: ../../Terraform_cicd/.github/actions/node-ci
+          uses: ./.github/actions/node-ci
 
         - name: Terraform Plan
           id: plan
