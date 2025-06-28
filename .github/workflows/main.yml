@@ -59,8 +59,6 @@ jobs:
         - name: Terraform init
           id: init
           run: terraform init
-          env:
-            TF_VAR_instancetype: "${{ github.event.inputs.instance_type }}"
 
         - name: Terraform Plan
           id: plan
