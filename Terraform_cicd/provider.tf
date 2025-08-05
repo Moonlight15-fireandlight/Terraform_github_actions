@@ -4,7 +4,8 @@ terraform {
 
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.84.0" #actualizo la version de 5.72 a 5.73 con un terraform init -upgrade
+      #version = "~> 5.84.0" #actualizo la version de 5.72 a 5.73 con un terraform init -upgrade
+      version = "6.7.0"
       #configuration_aliases = [ aws.case1, aws.case2 ]
     }
 
