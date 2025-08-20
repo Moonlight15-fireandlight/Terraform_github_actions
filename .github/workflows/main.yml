@@ -23,7 +23,8 @@ env:
 
 defaults:
   run:
-    working-directory: ./Terraform_cicd
+    #working-directory: ./Terraform_cicd
+    working-directory: /home/runner/work/Terraformgithub/Terraform_github_actions/Terraform_cicd
 
 #permissions:
 #  id-token: write # This is required for requesting the JWT
