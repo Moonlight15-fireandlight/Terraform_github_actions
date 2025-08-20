@@ -37,8 +37,8 @@ jobs:
 
     steps:
 
-        - name: Ping to github
-          run: ping registry.terraform.io
+        #- name: Ping to github
+        #  run: ping registry.terraform.io
 
         - name: checkout
           uses: actions/checkout@v4
