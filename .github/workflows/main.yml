@@ -23,8 +23,8 @@ env:
 
 defaults:
   run:
-    #working-directory: ./Terraform_cicd
-    working-directory: /home/runner/work/Terraformgithub/Terraform_github_actions/Terraform_cicd
+    working-directory: ./Terraform_cicd
+    #working-directory: /home/runner/work/Terraformgithub/Terraform_github_actions/Terraform_cicd
 
 #permissions:
 #  id-token: write # This is required for requesting the JWT
@@ -64,16 +64,17 @@ jobs:
         - name: Terraform init
           id: init
           run: terraform init
+          working-directory: ./Terraform_cicd
 
         - name: Terraform Plan
           id: plan
           run: terraform plan 
           #continue-on-error: true
-          #working-directory: ./Terraform_cicd
+          working-directory: ./Terraform_cicd
 
         - name: Terraform Apply
           run: terraform apply -auto-approve
-          #working-directory: ./Terraform_cicd
+          working-directory: ./Terraform_cicd
 
 
 
