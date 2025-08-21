@@ -8,12 +8,13 @@ on:
           description: 'Colocar el tipo de instancia a destruir del cluster de minikube' #Se puede poner condiciones ejemplo: diferente a t2.micro
           required: true
 
+
+env:
+  TF_VAR_instance_type: "${{ github.event.inputs.instance_type }}"
+
 defaults:
   run:
     working-directory: ./Terraform_cicd
-
-#env:
-  #TF_VAR_instance_type: "${{ github.event.inputs.instance_type }}"
 
 jobs:
     destroy:

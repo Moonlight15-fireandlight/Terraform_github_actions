@@ -1,4 +1,5 @@
 name: Deploy AWS EC2 by Terraform
+
 on: # [pull_request, workflow_dispatch] # el primero que se relice activara sera el trigger
   pull_request:
 
@@ -8,12 +9,6 @@ on: # [pull_request, workflow_dispatch] # el primero que se relice activara sera
       instance_type:
         description: 'Colocar el tipo de instancia donde se desplegara el cluster de minikube' #Se puede poner condiciones ejemplo: diferente a t2.micro
         required: true
-
-  #push:
-  #  branches:
-  #    - master
-  #pull_request:
-  #workflow_dispatch:
 
 env:
   TF_VAR_instance_type: "${{ github.event.inputs.instance_type }}"
