@@ -38,7 +38,7 @@ jobs:
                 #TF_VAR_instance_type: ""
 
             - name: Testing terraform show
-              run: terraform state show aws_instance.minikube_server.instance_type
+              run: terraform state show module.minikube.aws_instance.minikube_server | grep "instance_type"
 
             - name: Terraform Destroy
               id: destroy
