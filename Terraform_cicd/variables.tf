@@ -37,3 +37,19 @@ variable "instance_type" {
     #default = "t2.medium"
   
 }
+
+variable "kubectl_version" {
+
+    type = string
+
+    #default = "v1.31.0"
+  
+}
+
+variable "kubernetes_version" {
+
+    type = string
+
+    #default = "v1.32.0"
+  
+}

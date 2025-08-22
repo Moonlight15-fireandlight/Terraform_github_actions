@@ -18,11 +18,11 @@ variable "cidr_pub_subnets" {
   
 }
 
-variable "mypublicip" {
+#variable "mypublicip" {
 
-    type = string
+#    type = string
 
-}
+#}
 
 variable "ami" {
 
@@ -42,7 +42,7 @@ variable "kubectl_version" {
 
     type = string
 
-    default = "v1.31.0"
+    #default = "v1.31.0"
   
 }
 
@@ -50,6 +50,6 @@ variable "kubernetes_version" {
 
     type = string
 
-    default = "v1.32.0"
+    #default = "v1.32.0"
   
 }

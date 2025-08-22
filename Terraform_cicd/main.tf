@@ -19,12 +19,13 @@
 
 module "minikube" {
 
-  source            = "./modules/minikube"
-  vpc_cidr          = "172.16.0.0/16"
-  vpc_dns           = "true"
-  cidr_pub_subnets  = "172.16.0.0/20"
-  mypublicip        = "179.6.168.10/32"
-  instance_type      = var.instance_type
+  source              = "./modules/minikube"
+  vpc_cidr            = "172.16.0.0/16"
+  vpc_dns             = "true"
+  cidr_pub_subnets    = "172.16.0.0/20"
+  instance_type       = var.instance_type
+  kubernetes_version  = var.kubernetes_version
+  kubectl_version     = var.kubectl_version
 
 }
 
