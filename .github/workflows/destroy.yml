@@ -8,10 +8,6 @@ on:
 #          description: 'Colocar el tipo de instancia a destruir del cluster de minikube' #Se puede poner condiciones ejemplo: diferente a t2.micro
 #          required: true
 
-
-#env:
-#  TF_VAR_instance_type:
-
 defaults:
   run:
     working-directory: ./Terraform_cicd
@@ -38,10 +34,16 @@ jobs:
             - name: Terraform init
               id: init
               run: terraform init
+              #env:
+                #TF_VAR_instance_type: ""
+
+            - name: Testing terraform show
+              run: terraform state show aws_instance.minikube_server.instance_type
 
             - name: Terraform Destroy
               id: destroy
               run: terraform destroy -auto-approve
+
 
 # El error de los variables es posible que se solucione juntando un archivo de variables donde se declar el valor
 
