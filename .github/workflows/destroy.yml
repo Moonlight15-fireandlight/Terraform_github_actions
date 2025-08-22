@@ -34,8 +34,8 @@ jobs:
             - name: Terraform init
               id: init
               run: terraform init
-              env:
-                TF_VAR_instance_type: terraform state show module.minikube.aws_instance.minikube_server | grep "instance_type" | awk '{print $3}'
+              #env:
+                #TF_VAR_instance_type: terraform state show module.minikube.aws_instance.minikube_server | grep "instance_type" | awk '{print $3}'
 
             #- name: Testing terraform show
             #  run: terraform state show module.minikube.aws_instance.minikube_server | grep "instance_type" | awk '{print $3}'
@@ -43,6 +43,8 @@ jobs:
             - name: Terraform Destroy
               id: destroy
               run: terraform destroy -auto-approve
+              env:
+                TF_VAR_instance_type: terraform state show module.minikube.aws_instance.minikube_server | grep "instance_type" | awk '{print $3}'
 
 
 # El error de los variables es posible que se solucione juntando un archivo de variables donde se declar el valor
