@@ -2,6 +2,10 @@
 
 # install minikube
 
+kubectlversion=${kubectl_version}
+
+kubernetesversion=${kubernetes_version}
+
 curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
 
 sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
@@ -34,10 +38,6 @@ sudo usermod -aG docker ubuntu && newgrp docker
 #testing templatefile
 
 echo " testing my template variables ${kubectl_version} and ${kubernetes_version} " > /home/ubuntu/testing.txt 
-
-kubectlversion=${kubectl_version}
-
-kubernetesversion=${kubernetes_version}
 
 echo " minikube start --driver=docker --nodes 2 -p multinode-demo --kubernetes-version $kubernetesversion " > /home/ubuntu/minikube.txt
 

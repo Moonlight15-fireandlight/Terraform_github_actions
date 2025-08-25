@@ -39,7 +39,7 @@ jobs:
 
             - name: Testing terraform show
               #run: terraform state show module.minikube.aws_instance.minikube_server 
-              run: terraform state show module.minikube.aws_instance.minikube_server | grep -A 1 -E "user_data&kubectlversion" | grep "kubectlversion"
+              run: terraform state show module.minikube.aws_instance.minikube_server | grep -A 10 -E "user_data" | grep "kubectlversion"
 
             - name: Terraform Destroy
               id: destroy
