@@ -79,6 +79,9 @@ jobs:
           run: terraform apply -auto-approve
           working-directory: ./Terraform_cicd
 
+        - name: Testing terraform show
+          run: terraform state show
+
 
 
 
