@@ -39,15 +39,15 @@ jobs:
 
             - name: Testing terraform show
               #run: terraform state show module.minikube.aws_instance.minikube_server 
-              run: terraform state show module.minikube.aws_instance.minikube_server | grep -A 10 -E "user_data" | grep "kubectlversion"
+              run: terraform state show module.minikube.aws_instance.minikube_server | grep -A 10 -E "user_data" | grep "kubernetesversion" | awk '{print $3}'
 
             - name: Terraform Destroy
               id: destroy
               run: terraform destroy -auto-approve
               env:
                 TF_VAR_instance_type: terraform state show module.minikube.aws_instance.minikube_server | grep "instance_type" | awk '{print $3}' # cuando el script solo recibe como variable al tipo de instancia 
-                TF_VAR_kubectl_version: 
-
+                TF_VAR_kubectl_version: terraform state show module.minikube.aws_instance.minikube_server | grep -A 10 -E "user_data" | grep "kubectlversion" | awk '{print $3}'
+                TF_VAR_kubernetes_version: 
 # El error de los variables es posible que se solucione juntando un archivo de variables donde se declar el valor
 
 
