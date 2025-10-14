@@ -17,17 +17,17 @@
 
 #APUNTAR EL DOMINIO AL HOST (SERVIDOR )
 
-module "minikube" {
+#module "minikube" {
 
-  source              = "./modules/minikube"
-  vpc_cidr            = "172.16.0.0/16"
-  vpc_dns             = "true"
-  cidr_pub_subnets    = "172.16.0.0/20"
-  instance_type       = var.instance_type
-  kubernetes_version  = var.kubernetes_version
-  kubectl_version     = var.kubectl_version
+#  source              = "./modules/minikube"
+#  vpc_cidr            = "172.16.0.0/16"
+#  vpc_dns             = "true"
+#  cidr_pub_subnets    = "172.16.0.0/20"
+#  instance_type       = var.instance_type
+#  kubernetes_version  = var.kubernetes_version
+#  kubectl_version     = var.kubectl_version
 
-}
+#}
 
 #module "upload_images_s3" {
 
@@ -48,3 +48,14 @@ module "minikube" {
 #  instance_type     = "t2.medium" #deberia ser micro
 
 #}
+
+
+module instance_ec2 {
+
+  source = "./modules/ec2instance"
+  vpc_cidr            = "172.16.0.0/16"
+  vpc_dns             = "true"
+  cidr_pub_subnets    = "172.16.0.0/20"
+  instance_type       = var.instance_type
+
+}
