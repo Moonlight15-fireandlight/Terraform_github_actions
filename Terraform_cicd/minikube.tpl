@@ -55,4 +55,4 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # deploy minikube
 
-minikube start --driver=docker --nodes 2 -p multinode-demo --kubernetes-version $kubernetesversion
+#minikube start --driver=docker --nodes 2 -p multinode-demo --kubernetes-version $kubernetesversion
