@@ -19,13 +19,24 @@
 
 module "minikube" {
 
-  source              = "./modules/minikube"
+  source              = " ./modules/minikube" #declarar como una variable
   vpc_cidr            = "172.16.0.0/16"
   vpc_dns             = "true"
   cidr_pub_subnets    = "172.16.0.0/20"
   instance_type       = var.instance_type
   kubernetes_version  = var.kubernetes_version
   kubectl_version     = var.kubectl_version
+
+}
+
+
+module "ec2" {
+
+  source              =  "./modules/ec2instance"
+  vpc_cidr            = "172.16.0.0/16"
+  vpc_dns             = "true"
+  cidr_pub_subnets    = "172.16.0.0/20"
+  instance_type       = var.instance_type
 
 }
 

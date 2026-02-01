@@ -53,3 +53,9 @@ variable "kubernetes_version" {
     #default = "v1.32.0"
   
 }
+
+variable "modulename" {
+
+    type = string
+  
+}

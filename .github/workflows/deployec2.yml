@@ -1,4 +1,4 @@
-name: Deploy minikube by Terraform
+name: Deploy AWS EC2 by Terraform
 
 on: # [pull_request, workflow_dispatch] # el primero que se relice activara sera el trigger
   pull_request:
@@ -7,21 +7,19 @@ on: # [pull_request, workflow_dispatch] # el primero que se relice activara sera
     inputs:
 
       instance_type: #input_id
-        description: "Colocar el tipo de instancia donde se desplegara el cluster de minikube" #Se puede poner condiciones ejemplo: diferente a t2.micro
+        description: "Colocar el tipo de instancia donde se desplegara la instancia" #Se puede poner condiciones ejemplo: diferente a t2.micro
         required: true
-      kubernetes_version:
-        description: "Ingresar la version de kubernetes a tener"
-        required: true
-      kubectl_version: 
-        description: "Ingresar la version del kubectl a tener"
-        required: true
+      #kubernetes_version:
+       # description: "Ingresar la version de kubernetes a tener"
+      # required: true
+      #kubectl_version: 
+       # description: "Ingresar la version del kubectl a tener"
+       # required: true
       
       ## infra a construir
 
 env:
   TF_VAR_instance_type: "${{ github.event.inputs.instance_type }}"
-  TF_VAR_kubernetes_version: "${{ github.event.inputs.kubernetes_version }}"
-  TF_VAR_kubectl_version: "${{ github.event.inputs.kubectl_version}}"
 
 defaults:
   run:
@@ -70,7 +68,7 @@ jobs:
 
         - name: Terraform Plan
           id: plan
-          run: terraform plan 
+          run: terraform plan -target=module.ec2
           #continue-on-error: true
           working-directory: ./Terraform_cicd
 
