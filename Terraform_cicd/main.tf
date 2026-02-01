@@ -19,7 +19,7 @@
 
 module "minikube" {
 
-  source              = " ./modules/minikube" #declarar como una variable
+  source              = "./modules/minikube" #declarar como una variable
   vpc_cidr            = "172.16.0.0/16"
   vpc_dns             = "true"
   cidr_pub_subnets    = "172.16.0.0/20"
@@ -32,7 +32,7 @@ module "minikube" {
 
 module "ec2" {
 
-  source              =  "./modules/ec2instance"
+  source              = "./modules/ec2instance"
   vpc_cidr            = "172.16.0.0/16"
   vpc_dns             = "true"
   cidr_pub_subnets    = "172.16.0.0/20"
