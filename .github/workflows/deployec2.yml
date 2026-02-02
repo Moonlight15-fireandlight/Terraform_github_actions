@@ -68,7 +68,7 @@ jobs:
 
         - name: Terraform Plan
           id: plan
-          run: terraform plan -target=module.ec2
+          run: terraform plan -target module.ec2
           #continue-on-error: true
           working-directory: ./Terraform_cicd
 
