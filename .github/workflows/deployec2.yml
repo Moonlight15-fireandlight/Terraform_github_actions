@@ -66,6 +66,9 @@ jobs:
           run: terraform init
           working-directory: ./Terraform_cicd
 
+        - name: Observe env_variable
+          run: printenv | grep "TF_VAR"
+
         - name: Terraform Plan
           id: plan
           run: terraform plan -target module.ec2
