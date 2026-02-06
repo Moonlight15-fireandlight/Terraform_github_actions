@@ -54,8 +54,8 @@ variable "kubernetes_version" {
   
 }
 
-variable "modulename" {
+#variable "modulename" {
 
-    type = string
+#    type = string
   
-}
+#}
