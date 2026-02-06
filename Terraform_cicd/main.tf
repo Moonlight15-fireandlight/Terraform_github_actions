@@ -29,13 +29,13 @@ module "minikube" {
 
 }
 
-module "ec2" {
-  source              = "./modules/ec2instance"
-  vpc_cidr            = "172.16.0.0/16"
-  vpc_dns             = "true"
-  cidr_pub_subnets    = "172.16.0.0/20"
-  instance_type       = var.instance_type
-}
+#module "ec2" {
+#  source              = "./modules/ec2instance"
+#  vpc_cidr            = "172.16.0.0/16"
+#  vpc_dns             = "true"
+#  cidr_pub_subnets    = "172.16.0.0/20"
+#  instance_type       = var.instance_type
+#}
 
 #module "upload_images_s3" {
 
